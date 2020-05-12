@@ -4,6 +4,9 @@ chrome.runtime.onInstalled.addListener(async function() {
   chrome.storage.sync.set({code: data}, function() {
     console.log('code updated successfully!');
   });
+  chrome.storage.sync.set({status: 'stopped'}, function() {
+    console.log('status updated successfully!');
+  });
   chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
     chrome.declarativeContent.onPageChanged.addRules([{
       conditions: [new chrome.declarativeContent.PageStateMatcher({

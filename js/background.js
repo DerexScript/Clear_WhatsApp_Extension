@@ -1,8 +1,13 @@
 'use strict';
 chrome.runtime.onInstalled.addListener(async function() {
-  let data = await getData("https://gist.githubusercontent.com/DerexScript/727bbb24246b1b73ffeba38836e5303e/raw/9d3cd2e871961018dbb776647d25c5d85841a2b2/clearGroup.js");
-  chrome.storage.sync.set({code: data}, function() {
+  let data = await getData("https://gist.githubusercontent.com/DerexScript/727bbb24246b1b73ffeba38836e5303e/raw/8e3d5da794ec0a84a488a231c2f025e6812c707c/clearGroup.js");
+ /*
+ chrome.storage.sync.set({code: data}, function() {
     console.log('code updated successfully!');
+  });
+  */
+  chrome.storage.local.set({code: data}, function() {
+    console.log('storage local updated successfully {code}');
   });
   chrome.storage.sync.set({status: 'stopped'}, function() {
     console.log('status updated successfully!');
@@ -15,9 +20,10 @@ chrome.runtime.onInstalled.addListener(async function() {
       actions: [new chrome.declarativeContent.ShowPageAction()]
     }]);
   });
+  
 });
 
-let getData = (url) => new Promise((resolve, reject) => {
+let getData = url => new Promise((resolve, reject) => {
   let xmlhttp;
   if (window.XMLHttpRequest) {
     xmlhttp = new XMLHttpRequest();
